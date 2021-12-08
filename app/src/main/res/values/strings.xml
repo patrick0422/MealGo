@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">MealGo</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="edit_school_hint">학교 이름을 입력해주세요.</string>
+</resources>
