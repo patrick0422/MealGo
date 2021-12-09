@@ -7,7 +7,12 @@
 
     <fragment
         android:id="@+id/schoolFragment"
-        android:name="com.example.mealgo.ui.SchoolFragment"
-        android:label="fragment_school"
+        android:name="com.example.mealgo.ui.school.SchoolFragment"
+        android:label="학교 검색"
         tools:layout="@layout/fragment_school" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.mealgo.ui.profile.ProfileFragment"
+        android:label="내 정보"
+        tools:layout="@layout/fragment_profile" />
 </navigation>
