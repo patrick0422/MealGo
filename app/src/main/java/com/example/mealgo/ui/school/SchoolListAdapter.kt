@@ -1,31 +1,53 @@
-package com.example.mealgo.ui
+package com.example.mealgo.ui.school
 
+import android.app.AlertDialog
+import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.lifecycleScope
+import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mealgo.R
 import com.example.mealgo.base.BaseDiffUtil
 import com.example.mealgo.data.DataStoreRepository
 import com.example.mealgo.data.school.model.School
+import com.example.mealgo.databinding.DialogSchoolSelectBinding
 import com.example.mealgo.databinding.SchoolItemBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
-import javax.inject.Inject
+import kotlinx.coroutines.*
 
 
-class SchoolViewHolder @Inject constructor(private val binding: SchoolItemBinding, private val dataStoreRepository: DataStoreRepository) :RecyclerView.ViewHolder(binding.root) {
+class SchoolViewHolder(
+    private val binding: SchoolItemBinding,
+    private val dataStoreRepository: DataStoreRepository
+) : RecyclerView.ViewHolder(binding.root) {
     fun bind(school: School) = with(binding) {
         textSchoolName.text = school.schoolName
         textSchoolLocation.text = school.schoolLocation
 
         schoolView.setOnClickListener {
-            lifecycleOwner?.lifecycleScope?.launch {
+            showDialog(root.context, school)
+        }
+    }
+
+    private fun showDialog(context: Context, school: School) {
+        val dialogBinding = DialogSchoolSelectBinding.inflate(LayoutInflater.from(context))
+
+        val dialog = AlertDialog.Builder(context, R.style.CustomAlertDialog)
+            .setView(dialogBinding.root)
+            .create()
+
+        dialogBinding.textTitle.text = "학교 선택"
+        dialogBinding.textContent.text = "\"${school.schoolName}\"를 선택하시겠습니까?"
+        dialogBinding.buttonPositive.setOnClickListener {
+            CoroutineScope(Dispatchers.IO).launch {
                 dataStoreRepository.saveSchoolData(school)
             }
+            dialog.dismiss()
+            Toast.makeText(context, "저장되었습니다.", Toast.LENGTH_SHORT).show()
         }
+
+        dialog.show()
     }
 
     companion object {

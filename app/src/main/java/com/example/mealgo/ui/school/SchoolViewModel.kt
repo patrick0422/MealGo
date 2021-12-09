@@ -1,22 +1,20 @@
-package com.example.mealgo.ui
+package com.example.mealgo.ui.school
 
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.example.mealgo.data.school.SchoolDataSource
-import com.example.mealgo.data.school.model.School
-import com.example.mealgo.util.Constants.Companion.API_KEY
-import com.example.mealgo.util.Constants.Companion.QUERY_API_KEY
-import com.example.mealgo.util.Constants.Companion.QUERY_RESPONSE_TYPE
-import com.example.mealgo.util.Constants.Companion.QUERY_SCHOOL_NAME
-import com.example.mealgo.util.Constants.Companion.TAG
-import com.example.mealgo.util.NetworkResult
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import java.lang.Exception
 import javax.inject.Inject
+import kotlinx.coroutines.launch
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.MutableLiveData
+import com.example.mealgo.util.NetworkResult
+import com.example.mealgo.data.school.model.School
+import dagger.hilt.android.lifecycle.HiltViewModel
+import com.example.mealgo.data.school.SchoolDataSource
+import com.example.mealgo.util.Constants.Companion.API_KEY
+import com.example.mealgo.util.Constants.Companion.QUERY_API_KEY
+import com.example.mealgo.util.Constants.Companion.QUERY_SCHOOL_NAME
+import com.example.mealgo.util.Constants.Companion.QUERY_RESPONSE_TYPE
 
 @HiltViewModel
 class SchoolViewModel @Inject constructor(
@@ -37,7 +35,7 @@ class SchoolViewModel @Inject constructor(
         _schoolList.value = try {
             val response = schoolDataSource.getSchoolList(queries)
 
-            if (response.isSuccessful) {
+            if (response.isSuccessful && response.body() != null) {
                 val schoolResponse = response.body()!!
                 val header = schoolResponse.schoolInfo[0].head[1].result
                 if (header.code == "INFO-000")

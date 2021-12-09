@@ -1,8 +1,7 @@
-package com.example.mealgo.ui
+package com.example.mealgo.ui.school
 
 import android.util.Log
 import androidx.core.widget.doAfterTextChanged
-import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import com.example.mealgo.R
 import com.example.mealgo.databinding.FragmentSchoolBinding
