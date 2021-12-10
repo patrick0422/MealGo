@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mealgo.R
@@ -26,11 +27,12 @@ class SchoolViewHolder(
         textSchoolLocation.text = school.schoolLocation
 
         schoolView.setOnClickListener {
-            showDialog(root.context, school)
+            showDialog(root, school)
         }
     }
 
-    private fun showDialog(context: Context, school: School) {
+    private fun showDialog(parent: View, school: School) {
+        val context = parent.context
         val dialogBinding = DialogSchoolSelectBinding.inflate(LayoutInflater.from(context))
 
         val dialog = AlertDialog.Builder(context, R.style.CustomAlertDialog)
@@ -45,6 +47,7 @@ class SchoolViewHolder(
             }
             dialog.dismiss()
             Toast.makeText(context, "저장되었습니다.", Toast.LENGTH_SHORT).show()
+            parent.findNavController().popBackStack()
         }
 
         dialog.show()

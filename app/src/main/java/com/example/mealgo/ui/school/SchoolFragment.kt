@@ -1,8 +1,12 @@
 package com.example.mealgo.ui.school
 
+import android.content.Context
 import android.util.Log
+import android.view.MenuItem
+import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.mealgo.R
 import com.example.mealgo.databinding.FragmentSchoolBinding
 import com.example.mealgo.base.BaseFragment
@@ -22,7 +26,7 @@ class SchoolFragment: BaseFragment<FragmentSchoolBinding>(R.layout.fragment_scho
             schoolViewModel.getSchoolList(text.toString())
         }
 
-        schoolViewModel.schoolList.observe(this, { response ->
+        schoolViewModel.schoolList.observe(viewLifecycleOwner, { response ->
             when (response) {
                 is NetworkResult.Success -> {
                     Log.d(TAG, "schoolList: ${response.data}")

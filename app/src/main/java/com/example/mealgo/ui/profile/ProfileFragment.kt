@@ -1,11 +1,10 @@
 package com.example.mealgo.ui.profile
 
-import android.util.Log
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import com.example.mealgo.R
 import com.example.mealgo.base.BaseFragment
 import com.example.mealgo.databinding.FragmentProfileBinding
-import com.example.mealgo.util.Constants.Companion.TAG
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -15,7 +14,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
     override fun init() {
         profileViewModel.getSchool()
         profileViewModel.school.observe(viewLifecycleOwner, { school ->
-            Log.d(TAG, "init: $school")
+            binding.textSchoolName.text = school.schoolName
+            binding.textSchoolLocation.text = school.schoolLocation
         })
 
         binding.textEdit.setOnClickListener {
