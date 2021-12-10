@@ -20,7 +20,7 @@
             android:padding="10dp"
             android:hint="@string/edit_school_hint"
             android:inputType="text"
-            android:background="@drawable/edittext_round_border"
+            android:background="@drawable/round_border_main"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

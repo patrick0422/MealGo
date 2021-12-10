@@ -17,5 +17,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
         profileViewModel.school.observe(viewLifecycleOwner, { school ->
             Log.d(TAG, "init: $school")
         })
+
+        binding.textEdit.setOnClickListener {
+            it.findNavController().navigate(R.id.action_profileFragment_to_schoolFragment)
+        }
     }
 }

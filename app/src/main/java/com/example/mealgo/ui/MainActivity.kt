@@ -20,7 +20,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
 
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.schoolFragment,
+                R.id.mealFragment,
                 R.id.profileFragment
             )
         )
