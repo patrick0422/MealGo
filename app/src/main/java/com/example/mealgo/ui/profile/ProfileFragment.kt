@@ -1,5 +1,6 @@
 package com.example.mealgo.ui.profile
 
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.example.mealgo.R
@@ -12,6 +13,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
     private val profileViewModel: ProfileViewModel by viewModels()
 
     override fun init() {
+        val activity = activity as AppCompatActivity
+        activity.supportActionBar?.hide()
+
         profileViewModel.getSchool()
         profileViewModel.school.observe(viewLifecycleOwner, { school ->
             binding.textSchoolName.text = school.schoolName

@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import android.view.MenuItem
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -20,6 +21,9 @@ class SchoolFragment: BaseFragment<FragmentSchoolBinding>(R.layout.fragment_scho
     private val schoolListAdapter by lazy { SchoolListAdapter() }
 
     override fun init() {
+        val activity = activity as AppCompatActivity
+        activity.supportActionBar?.show()
+
         binding.schoolListView.adapter = schoolListAdapter
 
         binding.editSchool.doAfterTextChanged { text ->
