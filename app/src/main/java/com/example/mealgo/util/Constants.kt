@@ -13,6 +13,11 @@ class Constants {
         const val QUERY_RESPONSE_TYPE = "Type"
         const val QUERY_SCHOOL_NAME = "SCHUL_NM"
 
+
+        const val QUERY_SIDO_CODE = "ATPT_OFCDC_SC_CODE"
+        const val QUERY_SCHOOL_CODE = "SD_SCHUL_CODE"
+        const val QUERY_MEAL_DATE = "MLSV_YMD"
+
         // DataStore Params
         const val PREFERENCES_NAME = "MealGoStore"
 
