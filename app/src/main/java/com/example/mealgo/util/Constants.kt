@@ -26,5 +26,7 @@ class Constants {
         const val PREFERENCES_SCHOOL_CODE = "schoolCode"
         const val PREFERENCES_SCHOOL_NAME = "schoolName"
         const val PREFERENCES_SCHOOL_LOCATION = "schoolLocation"
+
+        const val PREFERENCES_NO_INFO = "정보 없음"
     }
 }

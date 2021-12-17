@@ -36,12 +36,28 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         with (navController) {
             when (item.itemId) {
+                android.R.id.home -> {
+                    popBackStack()
+                }
+                R.id.userProfile -> {
+                    if (currentDestination?.id == R.id.schoolFragment)
+                        popBackStack()
+                    else
+                        navigate(R.id.action_mealFragment_to_profileFragment)
+                }
+                else -> {
+
+                }
+            }
         }
         
         return true
     }
 
     override fun onBackPressed() {
-        navController.popBackStack()
+        if (navController.backQueue.isEmpty())
+            super.onBackPressed()
+        else
+            navController.popBackStack()
     }
 }

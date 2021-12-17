@@ -9,6 +9,7 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.example.mealgo.data.school.model.School
 import com.example.mealgo.util.Constants.Companion.PREFERENCES_NAME
+import com.example.mealgo.util.Constants.Companion.PREFERENCES_NO_INFO
 import com.example.mealgo.util.Constants.Companion.PREFERENCES_SCHOOL_CODE
 import com.example.mealgo.util.Constants.Companion.PREFERENCES_SCHOOL_LOCATION
 import com.example.mealgo.util.Constants.Companion.PREFERENCES_SCHOOL_NAME
@@ -58,11 +59,11 @@ class DataStoreRepository @Inject constructor(@ApplicationContext private val co
         }
         .map { preferences ->
             School(
-                preferences[PreferenceKeys.sidoCode] ?: "Unknown",
-                preferences[PreferenceKeys.sidoName] ?: "Unknown",
-                preferences[PreferenceKeys.schoolCode] ?: "Unknown",
-                preferences[PreferenceKeys.schoolName] ?: "Unknown",
-                preferences[PreferenceKeys.schoolLocation] ?: "Unknown"
+                preferences[PreferenceKeys.sidoCode] ?: PREFERENCES_NO_INFO,
+                preferences[PreferenceKeys.sidoName] ?: PREFERENCES_NO_INFO,
+                preferences[PreferenceKeys.schoolCode] ?: PREFERENCES_NO_INFO,
+                preferences[PreferenceKeys.schoolName] ?: PREFERENCES_NO_INFO,
+                preferences[PreferenceKeys.schoolLocation] ?: PREFERENCES_NO_INFO
             )
         }
 }

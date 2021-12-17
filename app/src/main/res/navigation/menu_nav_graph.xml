@@ -23,5 +23,9 @@
         android:id="@+id/mealFragment"
         android:name="com.example.mealgo.ui.meal.MealFragment"
         android:label="급식"
-        tools:layout="@layout/fragment_meal" />
+        tools:layout="@layout/fragment_meal" >
+        <action
+            android:id="@+id/action_mealFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
 </navigation>
