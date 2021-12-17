@@ -25,16 +25,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         navController = navHostFragment.navController
 
         setSupportActionBar(binding.toolbar)
-
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.mealFragment,
-                R.id.profileFragment
-            )
-        )
-
-        binding.bottomNav.setupWithNavController(navController)
-        setupActionBarWithNavController(navController, appBarConfiguration)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -44,8 +34,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            navController.popBackStack()
+        with (navController) {
+            when (item.itemId) {
         }
         
         return true
@@ -54,6 +44,4 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     override fun onBackPressed() {
         navController.popBackStack()
     }
-
-    override fun onNavigateUp(): Boolean = navController.navigateUp() || super.onNavigateUp()
 }
