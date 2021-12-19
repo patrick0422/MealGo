@@ -55,9 +55,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     }
 
     override fun onBackPressed() {
-        if (navController.backQueue.isEmpty())
+        if (!navController.popBackStack())
             super.onBackPressed()
-        else
-            navController.popBackStack()
+
     }
 }
