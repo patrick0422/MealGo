@@ -31,7 +31,7 @@ class MealFragment : BaseFragment<FragmentMealBinding>(R.layout.fragment_meal) {
     }
 
     private fun setObserver() {
-        mealViewModel.school.observe(viewLifecycleOwner, { school ->
+        mealViewModel.school.observe(viewLifecycleOwner) { school ->
             if (school.schoolCode == PREFERENCES_NO_INFO) {
                 makeToast("학교 정보를 먼저 설정해주세요")
                 findNavController().navigate(R.id.action_mealFragment_to_profileFragment)
@@ -39,13 +39,12 @@ class MealFragment : BaseFragment<FragmentMealBinding>(R.layout.fragment_meal) {
             else {
                 mealViewModel.getMeal()
             }
-        })
+        }
 
-        mealViewModel.mealList.observe(viewLifecycleOwner, { response ->
+        mealViewModel.mealList.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
                     clearMeal()
-
                     setMealData(response.data!!)
                     isLoading(false)
                 }
@@ -57,7 +56,7 @@ class MealFragment : BaseFragment<FragmentMealBinding>(R.layout.fragment_meal) {
                     isLoading(true)
                 }
             }
-        })
+        }
     }
 
     private fun clearMeal() = with(binding) {
