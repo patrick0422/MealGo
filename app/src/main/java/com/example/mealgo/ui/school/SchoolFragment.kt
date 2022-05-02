@@ -1,16 +1,18 @@
 package com.example.mealgo.ui.school
 
-import android.content.Context
+import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.MenuItem
-import androidx.activity.OnBackPressedCallback
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.example.mealgo.R
-import com.example.mealgo.databinding.FragmentSchoolBinding
 import com.example.mealgo.base.BaseFragment
+import com.example.mealgo.databinding.FragmentSchoolBinding
+import com.example.mealgo.ui.MainActivity
 import com.example.mealgo.util.Constants.Companion.TAG
 import com.example.mealgo.util.NetworkResult
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,4 +44,22 @@ class SchoolFragment: BaseFragment<FragmentSchoolBinding>(R.layout.fragment_scho
             }
         }
     }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        (activity as MainActivity?)?.apply {
+            supportActionBar?.show()
+            binding.bottomNav.visibility = View.GONE
+        }
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
+    override fun onStop() {
+        (activity as MainActivity?)?.apply {
+            supportActionBar?.hide()
+            binding.bottomNav.visibility = View.VISIBLE
+        }
+        super.onStop()
+    }
+
+
 }
