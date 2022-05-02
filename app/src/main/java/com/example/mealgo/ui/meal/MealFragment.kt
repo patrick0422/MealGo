@@ -2,7 +2,6 @@ package com.example.mealgo.ui.meal
 
 import android.util.Log
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.mealgo.R
@@ -12,7 +11,6 @@ import com.example.mealgo.util.Constants.Companion.PREFERENCES_NO_INFO
 import com.example.mealgo.util.Constants.Companion.TAG
 import com.example.mealgo.util.NetworkResult
 import dagger.hilt.android.AndroidEntryPoint
-
 
 @AndroidEntryPoint
 class MealFragment : BaseFragment<FragmentMealBinding>(R.layout.fragment_meal) {

@@ -16,7 +16,7 @@
             android:id="@+id/editSchool"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_margin="10dp"
             android:padding="10dp"
             android:hint="@string/edit_school_hint"
             android:inputType="text"
