@@ -1,29 +1,30 @@
 package com.example.mealgo.ui
 
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toolbar
+import androidx.activity.viewModels
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
 import com.example.mealgo.R
 import com.example.mealgo.databinding.ActivityMainBinding
 import com.example.mealgo.base.BaseActivity
-import com.example.mealgo.util.Constants.Companion.TAG
+import com.example.mealgo.ui.profile.ProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     private lateinit var navController: NavController
+    private val profileViewModel: ProfileViewModel by viewModels()
 
     override fun init() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         navController = navHostFragment.navController
 
+        profileViewModel.getSchool()
+        profileViewModel.school.observe(this) { school ->
+            binding.toolbar.title = school.schoolName
+//            binding.textSchoolLocation.text = school.schoolLocation
+        }
         setSupportActionBar(binding.toolbar)
     }
 
