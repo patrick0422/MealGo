@@ -40,7 +40,9 @@ class MealViewModel @Inject constructor(
     private var dateIndex: Long = 0
 
     private val _mealDate: MutableLiveData<String> = MutableLiveData(getDate(dateIndex))
-    val mealDate: LiveData<String> get() = _mealDate
+    private val mealDate: LiveData<String> get() = _mealDate
+
+    val mealDateFormatted: String get() = LocalDate.now().plusDays(dateIndex).format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일"))
 
     fun getSchool() = viewModelScope.launch {
         dataStoreRepository.loadSchoolInfo.collect { school ->
@@ -78,20 +80,31 @@ class MealViewModel @Inject constructor(
     }
 
     private fun processMeal(body: MealResponse): List<String> =
-        body.mealServiceDietInfo[1].mealList.map { rawMealList ->
-            rawMealList.dishName
-                .replace("<br/>", "\n")
-                .replace(Regex("[^ㄱ-ㅎㅏ-ㅣ가-힣-\n]"), "")
+        if(body.mealServiceDietInfo == null) {
+            listOf(
+                "정보 없음",
+                "정보 없음",
+                "정보 없음",
+            )
+        } else {
+            body.mealServiceDietInfo[1].mealList.map { rawMealList ->
+                rawMealList.dishName
+                    .replace("<br/>", "\n")
+                    .replace(Regex("[^ㄱ-ㅎㅏ-ㅣ가-힣-\n]"), "")
+            }
         }
 
-    fun onDateChange(view: View) {
-        if (view.id == R.id.buttonLeft)
-            _mealDate.value = getDate(--dateIndex)
-        else if (view.id == R.id.buttonRight)
-            _mealDate.value = getDate(++dateIndex)
+    fun onDateChange(index: Int) {
+        if(index == 0) {
+            dateIndex = 0
+            _mealDate.value = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"))
+        } else {
+            dateIndex += index
+            _mealDate.value = getDate(dateIndex)
+        }
+        Log.d(TAG, "onDateChange: dateIndex=${dateIndex}")
         getMeal()
     }
-
     private fun getDate(dateIndex: Long): String =
         LocalDate.now().plusDays(dateIndex).format(DateTimeFormatter.ofPattern("yyyyMMdd"))
 }

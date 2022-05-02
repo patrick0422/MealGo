@@ -23,7 +23,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         profileViewModel.getSchool()
         profileViewModel.school.observe(this) { school ->
             binding.toolbar.title = school.schoolName
-//            binding.textSchoolLocation.text = school.schoolLocation
         }
         setSupportActionBar(binding.toolbar)
     }
