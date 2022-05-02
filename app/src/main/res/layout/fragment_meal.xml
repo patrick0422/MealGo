@@ -23,40 +23,44 @@
                 android:id="@+id/buttonLeft"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
                 android:background="#00000000"
+                android:onClick="@{(view) -> viewModel.onDateChange(-1)}"
                 android:src="@drawable/ic_left"
-                android:onClick="@{(view) -> viewModel.onDateChange(view)}"
-                app:layout_constraintBottom_toBottomOf="@+id/textView"
-                app:layout_constraintEnd_toStartOf="@+id/textView"
+                app:layout_constraintBottom_toBottomOf="@+id/textDate"
+                app:layout_constraintEnd_toStartOf="@+id/textDate"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/textView" />
-
-            <ImageButton
-                android:id="@+id/buttonRight"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="#00000000"
-                android:src="@drawable/ic_right"
-                android:onClick="@{(view) -> viewModel.onDateChange(view)}"
-                app:layout_constraintBottom_toBottomOf="@+id/textView"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textView"
-                app:layout_constraintTop_toTopOf="@+id/textView" />
+                app:layout_constraintTop_toTopOf="@+id/textDate" />
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/textDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="36dp"
+                android:onClick="@{() -> viewModel.onDateChange(0)}"
                 android:fontFamily="@font/cafe24_surround"
                 android:textColor="@color/mealgo_main"
-                android:text="@{viewModel.mealDate}"
-                android:textSize="30sp"
+                android:textSize="24sp"
                 android:textStyle="bold"
                 android:textAlignment="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/buttonRight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:background="#00000000"
+                android:onClick="@{() -> viewModel.onDateChange(1)}"
+                android:src="@drawable/ic_right"
+                app:layout_constraintBottom_toBottomOf="@+id/textDate"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/textDate"
+                app:layout_constraintTop_toTopOf="@+id/textDate" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardBreakfast"
@@ -67,11 +71,12 @@
                 app:cardCornerRadius="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView">
+                app:layout_constraintTop_toBottomOf="@+id/textDate">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:minHeight="180dp">
 
                     <TextView
                         android:id="@+id/_textBreakfast"
@@ -92,14 +97,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
-                        android:text="@{viewModel.mealList.data[0]}"
+                        android:fontFamily="@font/cafe24_surround"
                         android:textAlignment="center"
                         android:textColor="@color/black"
-                        android:fontFamily="@font/cafe24_surround"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/_textBreakfast" />
+                        app:layout_constraintTop_toBottomOf="@+id/_textBreakfast"
+                        app:layout_constraintVertical_bias="0.0" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
@@ -115,7 +120,8 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:minHeight="180dp">
 
                     <TextView
                         android:id="@+id/_textLunch"
@@ -136,14 +142,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
-                        android:text="@{viewModel.mealList.data[1]}"
+                        android:fontFamily="@font/cafe24_surround"
                         android:textAlignment="center"
                         android:textColor="@color/black"
-                        android:fontFamily="@font/cafe24_surround"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/_textLunch" />
+                        app:layout_constraintTop_toBottomOf="@+id/_textLunch"
+                        app:layout_constraintVertical_bias="0.0" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
@@ -160,7 +166,8 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:minHeight="180dp">
 
                     <TextView
                         android:id="@+id/_textDinner"
@@ -181,14 +188,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
-                        android:text="@{viewModel.mealList.data[2]}"
+                        android:fontFamily="@font/cafe24_surround"
                         android:textAlignment="center"
                         android:textColor="@color/black"
-                        android:fontFamily="@font/cafe24_surround"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/_textDinner" />
+                        app:layout_constraintTop_toBottomOf="@+id/_textDinner"
+                        app:layout_constraintVertical_bias="0.0" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
