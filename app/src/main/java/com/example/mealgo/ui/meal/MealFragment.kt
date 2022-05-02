@@ -21,9 +21,6 @@ class MealFragment : BaseFragment<FragmentMealBinding>(R.layout.fragment_meal) {
     override fun init() {
         binding.viewModel = mealViewModel
 
-        val activity = activity as AppCompatActivity
-        activity.supportActionBar?.show()
-
         isLoading(true)
         mealViewModel.getSchool()
 
@@ -37,7 +34,8 @@ class MealFragment : BaseFragment<FragmentMealBinding>(R.layout.fragment_meal) {
                 findNavController().navigate(R.id.action_mealFragment_to_profileFragment)
             }
             else {
-                mealViewModel.getMeal()
+                if(mealViewModel.mealList.value == null)
+                    mealViewModel.getMeal()
             }
         }
 
@@ -70,14 +68,14 @@ class MealFragment : BaseFragment<FragmentMealBinding>(R.layout.fragment_meal) {
             binding.textDate.text = mealViewModel.mealDateFormatted
             when(mealList.size) {
                 1 -> {
-                    textBreakfast.text = "정보 없음"
+                    textBreakfast.text = "급식 없음"
                     textLunch.text = mealList[0]
-                    textDinner.text = "정보 없음"
+                    textDinner.text = "급식 없음"
                 }
                 2 -> {
                     textBreakfast.text = mealList[0]
                     textLunch.text = mealList[1]
-                    textDinner.text = "정보 없음"
+                    textDinner.text = "급식 없음"
                 }
                 3 -> {
                     textBreakfast.text = mealList[0]

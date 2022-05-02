@@ -67,7 +67,7 @@ class MealViewModel @Inject constructor(
 
         _mealList.value = try {
             val response = mealDataSource.getMeal(queries)
-            Log.d(TAG, "getMealList: ${response.raw()}")
+            Log.d(TAG, "getMeal(): ${response.raw()}")
 
             if (response.isSuccessful && response.body() != null) {
                 NetworkResult.Success(processMeal(response.body()!!))

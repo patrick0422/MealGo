@@ -21,9 +21,6 @@ class SchoolFragment: BaseFragment<FragmentSchoolBinding>(R.layout.fragment_scho
     private val schoolListAdapter by lazy { SchoolListAdapter() }
 
     override fun init() {
-        val activity = activity as AppCompatActivity
-        activity.supportActionBar?.show()
-
         binding.schoolListView.adapter = schoolListAdapter
 
         binding.editSchool.doAfterTextChanged { text ->
