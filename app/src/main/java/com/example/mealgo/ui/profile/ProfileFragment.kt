@@ -17,10 +17,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
         activity.supportActionBar?.hide()
 
         profileViewModel.getSchool()
-        profileViewModel.school.observe(viewLifecycleOwner, { school ->
+        profileViewModel.school.observe(viewLifecycleOwner) { school ->
             binding.textSchoolName.text = school.schoolName
             binding.textSchoolLocation.text = school.schoolLocation
-        })
+        }
 
         binding.textEdit.setOnClickListener {
             it.findNavController().navigate(R.id.action_profileFragment_to_schoolFragment)

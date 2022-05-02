@@ -30,7 +30,7 @@ class SchoolFragment: BaseFragment<FragmentSchoolBinding>(R.layout.fragment_scho
             schoolViewModel.getSchoolList(text.toString())
         }
 
-        schoolViewModel.schoolList.observe(viewLifecycleOwner, { response ->
+        schoolViewModel.schoolList.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
                     Log.d(TAG, "schoolList: ${response.data}")
@@ -43,6 +43,6 @@ class SchoolFragment: BaseFragment<FragmentSchoolBinding>(R.layout.fragment_scho
                     Log.d(TAG, "schoolList: Loading")
                 }
             }
-        })
+        }
     }
 }

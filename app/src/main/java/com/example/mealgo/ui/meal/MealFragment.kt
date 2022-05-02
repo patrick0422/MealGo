@@ -67,16 +67,17 @@ class MealFragment : BaseFragment<FragmentMealBinding>(R.layout.fragment_meal) {
 
     private fun setMealData(mealList: List<String?>) {
         with(binding) {
+            binding.textDate.text = mealViewModel.mealDateFormatted
             when(mealList.size) {
                 1 -> {
-                    textBreakfast.text = PREFERENCES_NO_INFO
+                    textBreakfast.text = "정보 없음"
                     textLunch.text = mealList[0]
-                    textDinner.text = PREFERENCES_NO_INFO
+                    textDinner.text = "정보 없음"
                 }
                 2 -> {
                     textBreakfast.text = mealList[0]
                     textLunch.text = mealList[1]
-                    textDinner.text = PREFERENCES_NO_INFO
+                    textDinner.text = "정보 없음"
                 }
                 3 -> {
                     textBreakfast.text = mealList[0]
