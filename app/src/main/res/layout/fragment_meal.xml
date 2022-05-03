@@ -23,14 +23,12 @@
                 android:id="@+id/buttonLeft"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="24dp"
+                android:layout_marginRight="24dp"
                 android:background="#00000000"
                 android:onClick="@{(view) -> viewModel.onDateChange(-1)}"
                 android:src="@drawable/ic_left"
                 app:layout_constraintBottom_toBottomOf="@+id/textDate"
-                app:layout_constraintEnd_toStartOf="@+id/textDate"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/cardBreakfast"
                 app:layout_constraintTop_toTopOf="@+id/textDate" />
 
             <TextView
@@ -52,14 +50,12 @@
                 android:id="@+id/buttonRight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="24dp"
+                android:layout_marginStart="24dp"
                 android:background="#00000000"
                 android:onClick="@{() -> viewModel.onDateChange(1)}"
                 android:src="@drawable/ic_right"
                 app:layout_constraintBottom_toBottomOf="@+id/textDate"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/textDate"
+                app:layout_constraintEnd_toEndOf="@+id/cardBreakfast"
                 app:layout_constraintTop_toTopOf="@+id/textDate" />
 
             <androidx.cardview.widget.CardView
