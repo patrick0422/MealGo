@@ -42,7 +42,17 @@ class MealViewModel @Inject constructor(
     private val _mealDate: MutableLiveData<String> = MutableLiveData(getDate(dateIndex))
     private val mealDate: LiveData<String> get() = _mealDate
 
-    val mealDateFormatted: String get() = LocalDate.now().plusDays(dateIndex).format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일"))
+    val mealDateFormatted: String get() {
+        val targetDate = LocalDate.now().plusDays(dateIndex)
+
+        val dayOfWeekList = listOf("월", "화", "수", "목", "금", "토", "일")
+        val dayOfWeek = targetDate.dayOfWeek.value
+
+        var result = targetDate.format(DateTimeFormatter.ofPattern("M월 d일 (${dayOfWeekList[dayOfWeek - 1]})"))
+        if (targetDate == LocalDate.now()) result += "-오늘"
+
+        return result
+    }
 
     fun getSchool() = viewModelScope.launch {
         dataStoreRepository.loadSchoolInfo.collect { school ->

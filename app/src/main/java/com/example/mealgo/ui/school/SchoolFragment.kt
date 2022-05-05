@@ -3,10 +3,8 @@ package com.example.mealgo.ui.school
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import com.example.mealgo.R
@@ -18,13 +16,12 @@ import com.example.mealgo.util.NetworkResult
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SchoolFragment: BaseFragment<FragmentSchoolBinding>(R.layout.fragment_school) {
+class SchoolFragment : BaseFragment<FragmentSchoolBinding>(R.layout.fragment_school) {
     private val schoolViewModel: SchoolViewModel by viewModels()
     private val schoolListAdapter by lazy { SchoolListAdapter() }
 
     override fun init() {
         binding.schoolListView.adapter = schoolListAdapter
-
         binding.editSchool.doAfterTextChanged { text ->
             schoolViewModel.getSchoolList(text.toString())
         }
@@ -60,6 +57,4 @@ class SchoolFragment: BaseFragment<FragmentSchoolBinding>(R.layout.fragment_scho
         }
         super.onStop()
     }
-
-
 }
