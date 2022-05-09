@@ -1,5 +1,6 @@
 package com.example.mealgo.ui.school
 
+import android.util.Log
 import java.lang.Exception
 import javax.inject.Inject
 import kotlinx.coroutines.launch
@@ -15,6 +16,11 @@ import com.example.mealgo.util.Constants.Companion.API_KEY
 import com.example.mealgo.util.Constants.Companion.QUERY_API_KEY
 import com.example.mealgo.util.Constants.Companion.QUERY_SCHOOL_NAME
 import com.example.mealgo.util.Constants.Companion.QUERY_RESPONSE_TYPE
+import com.example.mealgo.util.Constants.Companion.TAG
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.BroadcastChannel
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.*
 
 @HiltViewModel
 class SchoolViewModel @Inject constructor(
@@ -22,6 +28,18 @@ class SchoolViewModel @Inject constructor(
 ) : ViewModel() {
     private val _schoolList = MutableLiveData<NetworkResult<List<School>>>()
     val schoolList: LiveData<NetworkResult<List<School>>> get() = _schoolList
+
+    val searchQuery = MutableStateFlow("")
+
+    val result = searchQuery
+        .debounce(300)
+        .flatMapLatest {
+            flow {
+                emit(it)
+            }
+        }
+        .flowOn(Dispatchers.Default)
+        .catch { e: Throwable -> e.stackTraceToString() }
 
     fun getSchoolList(keyword: String) = viewModelScope.launch {
         _schoolList.value = NetworkResult.Loading()
@@ -44,8 +62,7 @@ class SchoolViewModel @Inject constructor(
                     val errorString = "${header.code}: ${header.message}"
                     NetworkResult.Error(errorString)
                 }
-            }
-            else {
+            } else {
                 NetworkResult.Error(response.message())
             }
         } catch (e: Exception) {
