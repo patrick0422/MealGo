@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.example.mealgo.R
 import com.example.mealgo.base.BaseFragment
 import com.example.mealgo.databinding.FragmentSchoolBinding
@@ -14,6 +15,8 @@ import com.example.mealgo.ui.MainActivity
 import com.example.mealgo.util.Constants.Companion.TAG
 import com.example.mealgo.util.NetworkResult
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SchoolFragment : BaseFragment<FragmentSchoolBinding>(R.layout.fragment_school) {
@@ -22,8 +25,9 @@ class SchoolFragment : BaseFragment<FragmentSchoolBinding>(R.layout.fragment_sch
 
     override fun init() {
         binding.schoolListView.adapter = schoolListAdapter
+
         binding.editSchool.doAfterTextChanged { text ->
-            schoolViewModel.getSchoolList(text.toString())
+            schoolViewModel.searchQuery.value = text.toString()
         }
 
         schoolViewModel.schoolList.observe(viewLifecycleOwner) { response ->
@@ -38,6 +42,11 @@ class SchoolFragment : BaseFragment<FragmentSchoolBinding>(R.layout.fragment_sch
                 is NetworkResult.Loading -> {
                     Log.d(TAG, "schoolList: Loading")
                 }
+            }
+        }
+        lifecycleScope.launch {
+            schoolViewModel.result.collect {
+                Log.d(TAG, "init: $it")
             }
         }
     }
