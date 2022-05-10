@@ -26,9 +26,6 @@ class SchoolFragment : BaseFragment<FragmentSchoolBinding>(R.layout.fragment_sch
     override fun init() {
         binding.schoolListView.adapter = schoolListAdapter
 
-//        binding.editSchool.doAfterTextChanged { text ->
-//            schoolViewModel.getSchoolList(text.toString())
-//        }
         binding.editSchool.doAfterTextChanged { text ->
             schoolViewModel.searchQuery.value = text.toString()
         }
@@ -47,7 +44,6 @@ class SchoolFragment : BaseFragment<FragmentSchoolBinding>(R.layout.fragment_sch
                 }
             }
         }
-
         lifecycleScope.launch {
             schoolViewModel.result.collect {
                 Log.d(TAG, "init: $it")

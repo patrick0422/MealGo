@@ -32,16 +32,18 @@ class SchoolViewModel @Inject constructor(
     val searchQuery = MutableStateFlow("")
 
     val result = searchQuery
-        .debounce(300)
-        .flatMapLatest {
+        .debounce(500)
+        .distinctUntilChanged() // 중복 제거
+        .flatMapLatest { keyword ->
             flow {
-                emit(it)
+                getSchoolList(keyword)
+                emit(keyword)
             }
         }
         .flowOn(Dispatchers.Default)
         .catch { e: Throwable -> e.stackTraceToString() }
 
-    fun getSchoolList(keyword: String) = viewModelScope.launch {
+    private fun getSchoolList(keyword: String) = viewModelScope.launch {
         _schoolList.value = NetworkResult.Loading()
 
         val queries = HashMap<String, String>()
