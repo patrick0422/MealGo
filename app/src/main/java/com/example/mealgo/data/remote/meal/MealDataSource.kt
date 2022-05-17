@@ -1,6 +1,6 @@
-package com.example.mealgo.data.meal
+package com.example.mealgo.data.remote.meal
 
-import com.example.mealgo.data.meal.model.MealResponse
+import com.example.mealgo.data.remote.meal.model.MealResponse
 import retrofit2.Response
 import javax.inject.Inject
 

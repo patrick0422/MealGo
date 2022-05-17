@@ -1,6 +1,6 @@
-package com.example.mealgo.data.school
+package com.example.mealgo.data.remote.school
 
-import com.example.mealgo.data.school.model.SchoolResponse
+import com.example.mealgo.data.remote.school.model.SchoolResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.QueryMap

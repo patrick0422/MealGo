@@ -1,4 +1,4 @@
-package com.example.mealgo.data.school.model
+package com.example.mealgo.data.remote.school.model
 
 
 import com.google.gson.annotations.SerializedName

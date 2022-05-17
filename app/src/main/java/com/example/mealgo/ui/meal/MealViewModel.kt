@@ -1,16 +1,14 @@
 package com.example.mealgo.ui.meal
 
 import android.util.Log
-import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mealgo.R
 import com.example.mealgo.data.DataStoreRepository
-import com.example.mealgo.data.meal.MealDataSource
-import com.example.mealgo.data.meal.model.MealResponse
-import com.example.mealgo.data.school.model.School
+import com.example.mealgo.data.remote.meal.MealDataSource
+import com.example.mealgo.data.remote.meal.model.MealResponse
+import com.example.mealgo.data.remote.school.model.School
 import com.example.mealgo.util.Constants
 import com.example.mealgo.util.Constants.Companion.QUERY_API_KEY
 import com.example.mealgo.util.Constants.Companion.QUERY_MEAL_DATE
@@ -20,7 +18,6 @@ import com.example.mealgo.util.Constants.Companion.QUERY_SIDO_CODE
 import com.example.mealgo.util.Constants.Companion.TAG
 import com.example.mealgo.util.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
