@@ -97,7 +97,7 @@ class MealViewModel @Inject constructor(
             body.mealServiceDietInfo[1].mealList.map { rawMealList ->
                 rawMealList.dishName
                     .replace("<br/>", "\n")
-                    .replace(Regex("[^ㄱ-ㅎㅏ-ㅣ가-힣-\n]"), "")
+                    .replace(Regex("[^ㄱ-ㅎㅏ-ㅣ가-힣-\n&]"), "")
             }
         }
 
