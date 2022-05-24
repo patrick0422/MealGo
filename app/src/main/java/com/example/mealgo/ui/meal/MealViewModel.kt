@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mealgo.data.DataStoreRepository
+import com.example.mealgo.data.MealRepository
 import com.example.mealgo.data.remote.meal.MealRemoteDataSource
 import com.example.mealgo.data.remote.meal.model.MealResponse
 import com.example.mealgo.data.remote.school.model.School
@@ -25,7 +26,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MealViewModel @Inject constructor(
-    private val mealRemoteDataSource: MealRemoteDataSource,
+    private val mealRepository: MealRepository,
     private val dataStoreRepository: DataStoreRepository
 ) : ViewModel() {
     private val _mealList: MutableLiveData<NetworkResult<List<String>>> = MutableLiveData()
@@ -73,7 +74,7 @@ class MealViewModel @Inject constructor(
         }
 
         _mealList.value = try {
-            val response = mealRemoteDataSource.getMeal(queries)
+            val response = mealRepository.remote.getMeal(queries)
             Log.d(TAG, "getMeal(): ${response.raw()}")
 
             if (response.isSuccessful && response.body() != null) {
