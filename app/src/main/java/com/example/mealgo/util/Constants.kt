@@ -28,5 +28,8 @@ class Constants {
         const val PREFERENCES_SCHOOL_LOCATION = "schoolLocation"
 
         const val PREFERENCES_NO_INFO = "정보 없음"
+
+        // Room
+        const val DATABASE_NAME = "MealGoDatabase"
     }
 }
