@@ -1,12 +1,10 @@
 package com.example.mealgo.ui.meal
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.mealgo.data.DataStoreRepository
 import com.example.mealgo.data.MealRepository
+import com.example.mealgo.data.local.meal.model.MealEntity
 import com.example.mealgo.data.remote.meal.MealRemoteDataSource
 import com.example.mealgo.data.remote.meal.model.MealResponse
 import com.example.mealgo.data.remote.school.model.School
@@ -29,6 +27,21 @@ class MealViewModel @Inject constructor(
     private val mealRepository: MealRepository,
     private val dataStoreRepository: DataStoreRepository
 ) : ViewModel() {
+    // Local Data
+    private val _meal = mealRepository.local.getMeal(getDate()).asLiveData()
+
+    fun insertMeal(mealList: List<String>) = viewModelScope.launch {
+        val mealEntity = MealEntity(
+            getDate(),
+            mealList[0],
+            mealList[1],
+            mealList[2]
+        )
+
+        mealRepository.local.insertMeal(mealEntity)
+    }
+
+    // Remote Data
     private val _mealList: MutableLiveData<NetworkResult<List<String>>> = MutableLiveData()
     val mealList: LiveData<NetworkResult<List<String>>> get() = _mealList
 
@@ -37,8 +50,8 @@ class MealViewModel @Inject constructor(
 
     private var dateIndex: Long = 0
 
-    private val _mealDate: MutableLiveData<String> = MutableLiveData(getDate(dateIndex))
-    private val mealDate: LiveData<String> get() = _mealDate
+    private val _mealDate: MutableLiveData<String> = MutableLiveData(getDate())
+    val mealDate: LiveData<String> get() = _mealDate
 
     val mealDateFormatted: String get() {
         val targetDate = LocalDate.now().plusDays(dateIndex)
@@ -78,7 +91,9 @@ class MealViewModel @Inject constructor(
             Log.d(TAG, "getMeal(): ${response.raw()}")
 
             if (response.isSuccessful && response.body() != null) {
-                NetworkResult.Success(processMeal(response.body()!!))
+                val mealList = processMeal(response.body()!!)
+                insertMeal(mealList)
+                NetworkResult.Success(mealList)
             } else {
                 NetworkResult.Error(response.message())
             }
@@ -108,11 +123,11 @@ class MealViewModel @Inject constructor(
             _mealDate.value = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"))
         } else {
             dateIndex += index
-            _mealDate.value = getDate(dateIndex)
+            _mealDate.value = getDate()
         }
         Log.d(TAG, "onDateChange: dateIndex=${dateIndex}")
         getMeal()
     }
-    private fun getDate(dateIndex: Long): String =
+    private fun getDate(): String =
         LocalDate.now().plusDays(dateIndex).format(DateTimeFormatter.ofPattern("yyyyMMdd"))
 }
