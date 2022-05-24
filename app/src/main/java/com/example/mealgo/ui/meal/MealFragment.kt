@@ -36,7 +36,9 @@ class MealFragment : BaseFragment<FragmentMealBinding>(R.layout.fragment_meal) {
                     mealViewModel.getMeal()
             }
         }
-
+        mealViewModel.mealDate.observe(viewLifecycleOwner) {
+            binding.textDate.text = mealViewModel.mealDateFormatted
+        }
         mealViewModel.mealList.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
@@ -63,7 +65,6 @@ class MealFragment : BaseFragment<FragmentMealBinding>(R.layout.fragment_meal) {
 
     private fun setMealData(mealList: List<String?>) {
         with(binding) {
-            binding.textDate.text = mealViewModel.mealDateFormatted
             when(mealList.size) {
                 1 -> {
                     textBreakfast.text = "급식 없음"
