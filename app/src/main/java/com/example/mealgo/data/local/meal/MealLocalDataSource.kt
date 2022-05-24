@@ -1,5 +1,10 @@
 package com.example.mealgo.data.local.meal
 
-class MealLocalDataSource {
+import javax.inject.Inject
+
+
+class MealLocalDataSource @Inject constructor(
+
+) {
 
 }
