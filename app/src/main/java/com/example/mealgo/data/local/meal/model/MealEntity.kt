@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 data class MealEntity(
     @PrimaryKey(autoGenerate = false)
     val mealDate: String,
-    val breakFast: String?,
-    val lunch: String?,
-    val dinner: String?
+    val breakFast: String,
+    val lunch: String,
+    val dinner: String
 )
