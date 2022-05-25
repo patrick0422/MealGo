@@ -1,4 +1,4 @@
-package com.example.mealgo.data.meal.model
+package com.example.mealgo.data.remote.meal.model
 
 
 import com.google.gson.annotations.SerializedName

@@ -7,7 +7,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import com.example.mealgo.data.school.model.School
+import com.example.mealgo.data.remote.school.model.School
 import com.example.mealgo.util.Constants.Companion.PREFERENCES_NAME
 import com.example.mealgo.util.Constants.Companion.PREFERENCES_NO_INFO
 import com.example.mealgo.util.Constants.Companion.PREFERENCES_SCHOOL_CODE
@@ -19,7 +19,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 import java.io.IOException
 import javax.inject.Inject

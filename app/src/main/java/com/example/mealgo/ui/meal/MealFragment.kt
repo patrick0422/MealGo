@@ -36,22 +36,13 @@ class MealFragment : BaseFragment<FragmentMealBinding>(R.layout.fragment_meal) {
                     mealViewModel.getMeal()
             }
         }
-
-        mealViewModel.mealList.observe(viewLifecycleOwner) { response ->
-            when (response) {
-                is NetworkResult.Success -> {
-                    clearMeal()
-                    setMealData(response.data!!)
-                    isLoading(false)
-                }
-                is NetworkResult.Error -> {
-                    isLoading(false)
-                    Log.d(TAG, "init: ${response.message}")
-                }
-                is NetworkResult.Loading -> {
-                    isLoading(true)
-                }
-            }
+        mealViewModel.mealDate.observe(viewLifecycleOwner) {
+            binding.textDate.text = mealViewModel.mealDateFormatted
+        }
+        mealViewModel.mealList.observe(viewLifecycleOwner) { mealList ->
+            clearMeal()
+            setMealData(mealList)
+            isLoading(false)
         }
     }
 
@@ -61,26 +52,11 @@ class MealFragment : BaseFragment<FragmentMealBinding>(R.layout.fragment_meal) {
         textDinner.text = ""
     }
 
-    private fun setMealData(mealList: List<String?>) {
+    private fun setMealData(mealList: List<String>) {
         with(binding) {
-            binding.textDate.text = mealViewModel.mealDateFormatted
-            when(mealList.size) {
-                1 -> {
-                    textBreakfast.text = "급식 없음"
-                    textLunch.text = mealList[0]
-                    textDinner.text = "급식 없음"
-                }
-                2 -> {
-                    textBreakfast.text = mealList[0]
-                    textLunch.text = mealList[1]
-                    textDinner.text = "급식 없음"
-                }
-                3 -> {
-                    textBreakfast.text = mealList[0]
-                    textLunch.text = mealList[1]
-                    textDinner.text = mealList[2]
-                }
-            }
+            textBreakfast.text = mealList[0]
+            textLunch.text = mealList[1]
+            textDinner.text = mealList[2]
         }
     }
 

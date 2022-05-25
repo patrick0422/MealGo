@@ -1,7 +1,6 @@
 package com.example.mealgo.ui.school
 
 import android.app.AlertDialog
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mealgo.R
 import com.example.mealgo.base.BaseDiffUtil
 import com.example.mealgo.data.DataStoreRepository
-import com.example.mealgo.data.school.model.School
+import com.example.mealgo.data.remote.school.model.School
 import com.example.mealgo.databinding.DialogSchoolSelectBinding
 import com.example.mealgo.databinding.SchoolItemBinding
 import kotlinx.coroutines.*
