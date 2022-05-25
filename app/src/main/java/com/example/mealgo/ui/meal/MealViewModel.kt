@@ -26,28 +26,10 @@ class MealViewModel @Inject constructor(
     private val mealRepository: MealRepository,
     private val dataStoreRepository: DataStoreRepository
 ) : ViewModel() {
-    // Local Data
-    private val _localMeal: MutableLiveData<MealEntity> = MutableLiveData()
-    val localMeal: LiveData<MealEntity> get() = _localMeal
-
-    private fun getLocalMeal() = viewModelScope.launch {
-        _localMeal.value = mealRepository.local.getMeal(getDate())
-    }
-
-    private fun insertMeal(mealList: List<String>) = viewModelScope.launch {
-        val mealEntity = MealEntity(
-            getDate(),
-            mealList[0],
-            mealList[1],
-            mealList[2]
-        )
-
-        mealRepository.local.insertMeal(mealEntity)
-    }
 
     // Remote Data
-    private val _mealList: MutableLiveData<NetworkResult<List<String>>> = MutableLiveData()
-    val mealList: LiveData<NetworkResult<List<String>>> get() = _mealList
+    private val _mealList: MutableLiveData<List<String>> = MutableLiveData()
+    val mealList: LiveData<List<String>> get() = _mealList
 
     private val _school: MutableLiveData<School> = MutableLiveData()
     val school: LiveData<School> get() = _school
@@ -78,63 +60,14 @@ class MealViewModel @Inject constructor(
     }
 
     fun getMeal() = viewModelScope.launch {
-        getLocalMeal()
+        val mealEntity = mealRepository.getMeal(getDate(), school.value!!) ?: return@launch
 
-        _mealList.value = NetworkResult.Loading()
-
-        val queries = HashMap<String, String>()
-
-        queries[QUERY_API_KEY] = Constants.API_KEY
-        queries[QUERY_RESPONSE_TYPE] = "json"
-        queries[QUERY_MEAL_DATE] = mealDate.value!!
-        with(school.value!!) {
-            queries[QUERY_SCHOOL_CODE] = schoolCode
-            queries[QUERY_SIDO_CODE] = sidoCode
-        }
-
-        _mealList.value = try {
-            val response = mealRepository.remote.getMeal(queries)
-            Log.d(TAG, "getMeal(): ${response.raw()}")
-
-            if (response.isSuccessful && response.body() != null) {
-                val mealList = processMeal(response.body()!!)
-                insertMeal(mealList)
-                NetworkResult.Success(mealList)
-            } else {
-                NetworkResult.Error(response.message())
-            }
-        } catch (e: Exception) {
-            NetworkResult.Error(e.stackTraceToString())
-        }
+        _mealList.value = listOf(
+            mealEntity.breakFast,
+            mealEntity.lunch,
+            mealEntity.dinner
+        )
     }
-
-    private fun processMeal(body: MealResponse): List<String> {
-        val result = mutableListOf("정보 없음", "정보 없음", "정보 없음")
-
-        if (body.mealServiceDietInfo == null) return result
-
-        val mealList = body.mealServiceDietInfo[1].mealList
-        when(mealList.size) {
-            1 -> { // 급식이 한 개 있는 경우 -> 중식만 있는 경우로 판단
-                result[1] = processDish(mealList[0].dishName)
-            }
-            2 -> { // 급식이 두 개 있는 경우 -> 조식, 중식이 있는 경우로 판단
-                result[0] = processDish(mealList[0].dishName)
-                result[1] = processDish(mealList[1].dishName)
-            }
-            3 -> { // 급식이 세 개 있는 경우 -> 조식, 중식, 석식이 있는 경우로 판단
-                result[0] = processDish(mealList[0].dishName)
-                result[1] = processDish(mealList[1].dishName)
-                result[2] = processDish(mealList[2].dishName)
-            }
-        }
-
-        return result
-    }
-
-    private fun processDish(dishName: String): String = dishName
-        .replace("<br/>", "\n")
-        .replace(Regex("[^ㄱ-ㅎㅏ-ㅣ가-힣-\n&]"), "")
 
     fun onDateChange(index: Int) {
         if(index == 0) {

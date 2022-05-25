@@ -39,24 +39,10 @@ class MealFragment : BaseFragment<FragmentMealBinding>(R.layout.fragment_meal) {
         mealViewModel.mealDate.observe(viewLifecycleOwner) {
             binding.textDate.text = mealViewModel.mealDateFormatted
         }
-        mealViewModel.mealList.observe(viewLifecycleOwner) { response ->
-            when (response) {
-                is NetworkResult.Success -> {
-                    clearMeal()
-                    setMealData(response.data!!)
-                    isLoading(false)
-                }
-                is NetworkResult.Error -> {
-                    isLoading(false)
-                    Log.d(TAG, "init: ${response.message}")
-                }
-                is NetworkResult.Loading -> {
-                    isLoading(true)
-                }
-            }
-        }
-        mealViewModel.localMeal.observe(viewLifecycleOwner) {
-            Log.d(TAG, "setObserver: Loaded info from Room = $it")
+        mealViewModel.mealList.observe(viewLifecycleOwner) { mealList ->
+            clearMeal()
+            setMealData(mealList)
+            isLoading(false)
         }
     }
 
