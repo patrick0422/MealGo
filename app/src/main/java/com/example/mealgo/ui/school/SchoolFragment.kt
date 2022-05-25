@@ -1,33 +1,33 @@
 package com.example.mealgo.ui.school
 
-import android.content.Context
+import android.os.Bundle
 import android.util.Log
-import android.view.MenuItem
-import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
+import androidx.lifecycle.lifecycleScope
 import com.example.mealgo.R
-import com.example.mealgo.databinding.FragmentSchoolBinding
 import com.example.mealgo.base.BaseFragment
+import com.example.mealgo.databinding.FragmentSchoolBinding
+import com.example.mealgo.ui.MainActivity
 import com.example.mealgo.util.Constants.Companion.TAG
 import com.example.mealgo.util.NetworkResult
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SchoolFragment: BaseFragment<FragmentSchoolBinding>(R.layout.fragment_school) {
+class SchoolFragment : BaseFragment<FragmentSchoolBinding>(R.layout.fragment_school) {
     private val schoolViewModel: SchoolViewModel by viewModels()
     private val schoolListAdapter by lazy { SchoolListAdapter() }
 
     override fun init() {
-        val activity = activity as AppCompatActivity
-        activity.supportActionBar?.show()
-
         binding.schoolListView.adapter = schoolListAdapter
 
         binding.editSchool.doAfterTextChanged { text ->
-            schoolViewModel.getSchoolList(text.toString())
+            schoolViewModel.searchQuery.value = text.toString()
         }
 
         schoolViewModel.schoolList.observe(viewLifecycleOwner) { response ->
@@ -44,5 +44,26 @@ class SchoolFragment: BaseFragment<FragmentSchoolBinding>(R.layout.fragment_scho
                 }
             }
         }
+        lifecycleScope.launch {
+            schoolViewModel.result.collect {
+                Log.d(TAG, "init: $it")
+            }
+        }
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        (activity as MainActivity?)?.apply {
+            supportActionBar?.show()
+            binding.bottomNav.visibility = View.GONE
+        }
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
+    override fun onStop() {
+        (activity as MainActivity?)?.apply {
+            supportActionBar?.hide()
+            binding.bottomNav.visibility = View.VISIBLE
+        }
+        super.onStop()
     }
 }

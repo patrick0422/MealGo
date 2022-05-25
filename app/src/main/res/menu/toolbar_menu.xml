@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/userProfile"
+    <item android:id="@+id/mealFragment"
+        android:title="급식"
+        android:icon="@drawable/ic_meal"
+        app:showAsAction="ifRoom"/>
+    <item android:id="@+id/profileFragment"
         android:title="내 정보"
         android:icon="@drawable/ic_profile"
-        app:showAsAction="always"/>
+        app:showAsAction="ifRoom"/>
 </menu>

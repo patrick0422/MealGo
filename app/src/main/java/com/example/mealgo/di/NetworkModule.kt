@@ -1,7 +1,7 @@
 package com.example.mealgo.di
 
-import com.example.mealgo.data.meal.MealService
-import com.example.mealgo.data.school.SchoolService
+import com.example.mealgo.data.remote.meal.MealService
+import com.example.mealgo.data.remote.school.SchoolService
 import com.example.mealgo.util.Constants.Companion.BASE_URL
 import dagger.Module
 import dagger.Provides

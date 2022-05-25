@@ -2,7 +2,6 @@ package com.example.mealgo.ui.meal
 
 import android.util.Log
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.mealgo.R
@@ -13,16 +12,12 @@ import com.example.mealgo.util.Constants.Companion.TAG
 import com.example.mealgo.util.NetworkResult
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
 class MealFragment : BaseFragment<FragmentMealBinding>(R.layout.fragment_meal) {
     private val mealViewModel: MealViewModel by viewModels()
 
     override fun init() {
         binding.viewModel = mealViewModel
-
-        val activity = activity as AppCompatActivity
-        activity.supportActionBar?.show()
 
         isLoading(true)
         mealViewModel.getSchool()
@@ -37,25 +32,17 @@ class MealFragment : BaseFragment<FragmentMealBinding>(R.layout.fragment_meal) {
                 findNavController().navigate(R.id.action_mealFragment_to_profileFragment)
             }
             else {
-                mealViewModel.getMeal()
+                if(mealViewModel.mealList.value == null)
+                    mealViewModel.getMeal()
             }
         }
-
-        mealViewModel.mealList.observe(viewLifecycleOwner) { response ->
-            when (response) {
-                is NetworkResult.Success -> {
-                    clearMeal()
-                    setMealData(response.data!!)
-                    isLoading(false)
-                }
-                is NetworkResult.Error -> {
-                    isLoading(false)
-                    Log.d(TAG, "init: ${response.message}")
-                }
-                is NetworkResult.Loading -> {
-                    isLoading(true)
-                }
-            }
+        mealViewModel.mealDate.observe(viewLifecycleOwner) {
+            binding.textDate.text = mealViewModel.mealDateFormatted
+        }
+        mealViewModel.mealList.observe(viewLifecycleOwner) { mealList ->
+            clearMeal()
+            setMealData(mealList)
+            isLoading(false)
         }
     }
 
@@ -65,26 +52,11 @@ class MealFragment : BaseFragment<FragmentMealBinding>(R.layout.fragment_meal) {
         textDinner.text = ""
     }
 
-    private fun setMealData(mealList: List<String?>) {
+    private fun setMealData(mealList: List<String>) {
         with(binding) {
-            binding.textDate.text = mealViewModel.mealDateFormatted
-            when(mealList.size) {
-                1 -> {
-                    textBreakfast.text = "정보 없음"
-                    textLunch.text = mealList[0]
-                    textDinner.text = "정보 없음"
-                }
-                2 -> {
-                    textBreakfast.text = mealList[0]
-                    textLunch.text = mealList[1]
-                    textDinner.text = "정보 없음"
-                }
-                3 -> {
-                    textBreakfast.text = mealList[0]
-                    textLunch.text = mealList[1]
-                    textDinner.text = mealList[2]
-                }
-            }
+            textBreakfast.text = mealList[0]
+            textLunch.text = mealList[1]
+            textDinner.text = mealList[2]
         }
     }
 
