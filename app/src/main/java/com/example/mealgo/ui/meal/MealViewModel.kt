@@ -5,7 +5,6 @@ import androidx.lifecycle.*
 import com.example.mealgo.data.DataStoreRepository
 import com.example.mealgo.data.MealRepository
 import com.example.mealgo.data.local.meal.model.MealEntity
-import com.example.mealgo.data.remote.meal.MealRemoteDataSource
 import com.example.mealgo.data.remote.meal.model.MealResponse
 import com.example.mealgo.data.remote.school.model.School
 import com.example.mealgo.util.Constants
@@ -35,7 +34,7 @@ class MealViewModel @Inject constructor(
         _localMeal.value = mealRepository.local.getMeal(getDate())
     }
 
-    fun insertMeal(mealList: List<String>) = viewModelScope.launch {
+    private fun insertMeal(mealList: List<String>) = viewModelScope.launch {
         val mealEntity = MealEntity(
             getDate(),
             mealList[0],
@@ -79,6 +78,8 @@ class MealViewModel @Inject constructor(
     }
 
     fun getMeal() = viewModelScope.launch {
+        getLocalMeal()
+
         _mealList.value = NetworkResult.Loading()
 
         val queries = HashMap<String, String>()

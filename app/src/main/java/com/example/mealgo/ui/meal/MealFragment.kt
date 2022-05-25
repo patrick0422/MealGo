@@ -55,6 +55,9 @@ class MealFragment : BaseFragment<FragmentMealBinding>(R.layout.fragment_meal) {
                 }
             }
         }
+        mealViewModel.localMeal.observe(viewLifecycleOwner) {
+            Log.d(TAG, "setObserver: Loaded info from Room = $it")
+        }
     }
 
     private fun clearMeal() = with(binding) {
