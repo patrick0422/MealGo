@@ -7,8 +7,8 @@ interface MealDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMeal(mealEntity: MealEntity)
 
-    @Query("SELECT * FROM MealEntity WHERE mealDate = :mealDate")
-    suspend fun getMeal(mealDate: String): MealEntity
+    @Query("SELECT * FROM MealEntity WHERE mealDate = :mealDate AND schoolName = :schoolName")
+    suspend fun getMeal(mealDate: String, schoolName: String): MealEntity?
 
     @Delete
     suspend fun deleteMeal(mealEntity: MealEntity)
