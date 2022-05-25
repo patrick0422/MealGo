@@ -107,20 +107,33 @@ class MealViewModel @Inject constructor(
         }
     }
 
-    private fun processMeal(body: MealResponse): List<String> =
-        if(body.mealServiceDietInfo == null) {
-            listOf(
-                "정보 없음",
-                "정보 없음",
-                "정보 없음",
-            )
-        } else {
-            body.mealServiceDietInfo[1].mealList.map { rawMealList ->
-                rawMealList.dishName
-                    .replace("<br/>", "\n")
-                    .replace(Regex("[^ㄱ-ㅎㅏ-ㅣ가-힣-\n&]"), "")
+    private fun processMeal(body: MealResponse): List<String> {
+        val result = mutableListOf("정보 없음", "정보 없음", "정보 없음")
+
+        if (body.mealServiceDietInfo == null) return result
+
+        val mealList = body.mealServiceDietInfo[1].mealList
+        when(mealList.size) {
+            1 -> { // 급식이 한 개 있는 경우 -> 중식만 있는 경우로 판단
+                result[1] = processDish(mealList[0].dishName)
+            }
+            2 -> { // 급식이 두 개 있는 경우 -> 조식, 중식이 있는 경우로 판단
+                result[0] = processDish(mealList[0].dishName)
+                result[1] = processDish(mealList[1].dishName)
+            }
+            3 -> { // 급식이 세 개 있는 경우 -> 조식, 중식, 석식이 있는 경우로 판단
+                result[0] = processDish(mealList[0].dishName)
+                result[1] = processDish(mealList[1].dishName)
+                result[2] = processDish(mealList[2].dishName)
             }
         }
+
+        return result
+    }
+
+    private fun processDish(dishName: String): String = dishName
+        .replace("<br/>", "\n")
+        .replace(Regex("[^ㄱ-ㅎㅏ-ㅣ가-힣-\n&]"), "")
 
     fun onDateChange(index: Int) {
         if(index == 0) {

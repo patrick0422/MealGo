@@ -63,25 +63,11 @@ class MealFragment : BaseFragment<FragmentMealBinding>(R.layout.fragment_meal) {
         textDinner.text = ""
     }
 
-    private fun setMealData(mealList: List<String?>) {
+    private fun setMealData(mealList: List<String>) {
         with(binding) {
-            when(mealList.size) {
-                1 -> {
-                    textBreakfast.text = "급식 없음"
-                    textLunch.text = mealList[0]
-                    textDinner.text = "급식 없음"
-                }
-                2 -> {
-                    textBreakfast.text = mealList[0]
-                    textLunch.text = mealList[1]
-                    textDinner.text = "급식 없음"
-                }
-                3 -> {
-                    textBreakfast.text = mealList[0]
-                    textLunch.text = mealList[1]
-                    textDinner.text = mealList[2]
-                }
-            }
+            textBreakfast.text = mealList[0]
+            textLunch.text = mealList[1]
+            textDinner.text = mealList[2]
         }
     }
 
