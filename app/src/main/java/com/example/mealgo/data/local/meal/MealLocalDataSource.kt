@@ -12,5 +12,5 @@ class MealLocalDataSource @Inject constructor(
 
     suspend fun deleteMeal(mealEntity: MealEntity) = mealDao.deleteMeal(mealEntity)
 
-    fun getMeal(mealDate: String) = mealDao.getMeal(mealDate)
+    suspend fun getMeal(mealDate: String) = mealDao.getMeal(mealDate)
 }

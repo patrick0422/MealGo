@@ -28,7 +28,12 @@ class MealViewModel @Inject constructor(
     private val dataStoreRepository: DataStoreRepository
 ) : ViewModel() {
     // Local Data
-    private val _meal = mealRepository.local.getMeal(getDate()).asLiveData()
+    private val _localMeal: MutableLiveData<MealEntity> = MutableLiveData()
+    val localMeal: LiveData<MealEntity> get() = _localMeal
+
+    private fun getLocalMeal() = viewModelScope.launch {
+        _localMeal.value = mealRepository.local.getMeal(getDate())
+    }
 
     fun insertMeal(mealList: List<String>) = viewModelScope.launch {
         val mealEntity = MealEntity(
