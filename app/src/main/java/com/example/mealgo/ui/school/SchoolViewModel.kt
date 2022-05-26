@@ -16,6 +16,7 @@ import com.example.mealgo.util.Constants.Companion.QUERY_API_KEY
 import com.example.mealgo.util.Constants.Companion.QUERY_SCHOOL_NAME
 import com.example.mealgo.util.Constants.Companion.QUERY_RESPONSE_TYPE
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 
 @HiltViewModel
@@ -27,6 +28,7 @@ class SchoolViewModel @Inject constructor(
 
     val searchQuery = MutableStateFlow("")
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     val result = searchQuery
         .debounce(500)
         .distinctUntilChanged() // 중복 제거
