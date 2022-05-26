@@ -12,8 +12,8 @@ import com.example.mealgo.util.NetworkResult
 import javax.inject.Inject
 
 class MealRepository @Inject constructor(
-    val local: MealLocalDataSource,
-    val remote: MealRemoteDataSource
+    private val local: MealLocalDataSource,
+    private val remote: MealRemoteDataSource
 ) {
     suspend fun getMeal(mealDate: String, school: School): MealEntity? {
         val localMealResult = local.getMeal(mealDate, school.schoolName)
