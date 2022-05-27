@@ -58,11 +58,11 @@ class DataStoreRepository @Inject constructor(@ApplicationContext private val co
         }
         .map { preferences ->
             School(
-                preferences[PreferenceKeys.sidoCode] ?: PREFERENCES_NO_INFO,
-                preferences[PreferenceKeys.sidoName] ?: PREFERENCES_NO_INFO,
-                preferences[PreferenceKeys.schoolCode] ?: PREFERENCES_NO_INFO,
-                preferences[PreferenceKeys.schoolName] ?: PREFERENCES_NO_INFO,
-                preferences[PreferenceKeys.schoolLocation] ?: PREFERENCES_NO_INFO
+                preferences[PreferenceKeys.sidoCode] ?: "F10",
+                preferences[PreferenceKeys.sidoName] ?: "광주광역시교육청",
+                preferences[PreferenceKeys.schoolCode] ?: "7380292",
+                preferences[PreferenceKeys.schoolName] ?: "광주소프트웨어마이스터고등학교",
+                preferences[PreferenceKeys.schoolLocation] ?: "광주광역시 광산구 상무대로 312"
             )
         }
 }

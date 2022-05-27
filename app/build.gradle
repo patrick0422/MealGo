@@ -89,14 +89,23 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version"
 
 
-    def lifecycle_version = "2.4.1"
+    def lifecycle_version = "2.5.0-rc01"
 
-    // Saved state module for ViewModel
-    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
-
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    // ViewModel
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    // LiveData
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+
+    // viewModelScope
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    // lifecycleScope
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
+    // livedata builder
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+
+    // ViewModel 가져올 때 by viewModels() 사용 위해 필요
+    implementation "androidx.activity:activity-ktx:1.4.0"
+    implementation "androidx.fragment:fragment-ktx:1.4.0"
 
     def room_version = "2.4.2"
 

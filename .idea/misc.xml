@@ -3,8 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Coding/Android/MealGo/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2325" />
+        <entry key="..\:/Coding/Android/MealGo/app/src/main/res/drawable/ic_mealgo_foreground.xml" value="0.2325" />
+        <entry key="..\:/Coding/Android/MealGo/app/src/main/res/drawable/ic_round_food_bank_24.xml" value="0.2325" />
         <entry key="..\:/Coding/Android/MealGo/app/src/main/res/drawable/ic_school.xml" value="0.2345" />
         <entry key="..\:/Coding/Android/MealGo/app/src/main/res/layout/activity_main.xml" value="0.39166666666666666" />
+        <entry key="..\:/Coding/Android/MealGo/app/src/main/res/layout/dialog_school_select.xml" value="0.1912280701754386" />
         <entry key="..\:/Coding/Android/MealGo/app/src/main/res/layout/fragment_meal.xml" value="0.39166666666666666" />
         <entry key="..\:/Coding/Android/MealGo/app/src/main/res/layout/fragment_profile.xml" value="0.22708333333333333" />
         <entry key="..\:/Coding/Android/MealGo/app/src/main/res/layout/fragment_school.xml" value="0.39166666666666666" />

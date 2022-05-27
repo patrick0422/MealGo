@@ -8,11 +8,9 @@ import android.widget.Toast
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mealgo.R
 import com.example.mealgo.base.BaseDiffUtil
 import com.example.mealgo.data.DataStoreRepository
 import com.example.mealgo.data.remote.school.model.School
-import com.example.mealgo.databinding.DialogSchoolSelectBinding
 import com.example.mealgo.databinding.SchoolItemBinding
 import kotlinx.coroutines.*
 
@@ -31,25 +29,18 @@ class SchoolViewHolder(
     }
 
     private fun showDialog(parent: View, school: School) {
-        val context = parent.context
-        val dialogBinding = DialogSchoolSelectBinding.inflate(LayoutInflater.from(context))
-
-        val dialog = AlertDialog.Builder(context, R.style.CustomAlertDialog)
-            .setView(dialogBinding.root)
-            .create()
-
-        dialogBinding.textTitle.text = "학교 선택"
-        dialogBinding.textContent.text = "\"${school.schoolName}\"를 선택하시겠습니까?"
-        dialogBinding.buttonPositive.setOnClickListener {
-            CoroutineScope(Dispatchers.IO).launch {
-                dataStoreRepository.saveSchoolData(school)
+        AlertDialog.Builder(parent.context)
+            .setTitle("학교 선택")
+            .setMessage("\"${school.schoolName}\"를 선택하시겠습니까?")
+            .setPositiveButton("확인") { _, _ ->
+                CoroutineScope(Dispatchers.IO).launch {
+                    dataStoreRepository.saveSchoolData(school)
+                }
+                Toast.makeText(parent.context, "저장되었습니다.", Toast.LENGTH_SHORT).show()
+                parent.findNavController().popBackStack()
             }
-            dialog.dismiss()
-            Toast.makeText(context, "저장되었습니다.", Toast.LENGTH_SHORT).show()
-            parent.findNavController().popBackStack()
-        }
-
-        dialog.show()
+            .create()
+            .show()
     }
 
     companion object {
