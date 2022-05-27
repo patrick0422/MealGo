@@ -37,7 +37,7 @@ class SchoolViewHolder(
                     dataStoreRepository.saveSchoolData(school)
                 }
                 Toast.makeText(parent.context, "저장되었습니다.", Toast.LENGTH_SHORT).show()
-//                parent.findNavController().popBackStack()
+                parent.findNavController().popBackStack()
             }
             .create()
             .show()
