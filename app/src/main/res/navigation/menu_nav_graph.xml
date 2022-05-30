@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@+id/schoolFragment"
-        android:name="com.example.mealgo.ui.school.SchoolFragment"
+        android:name="com.patrick0422.mealgo.ui.school.SchoolFragment"
         android:label="학교 검색"
         tools:layout="@layout/fragment_school" />
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.mealgo.ui.profile.ProfileFragment"
+        android:name="com.patrick0422.mealgo.ui.profile.ProfileFragment"
         android:label="내 정보"
         tools:layout="@layout/fragment_profile" >
         <action
@@ -26,7 +26,7 @@
     </fragment>
     <fragment
         android:id="@+id/mealFragment"
-        android:name="com.example.mealgo.ui.meal.MealFragment"
+        android:name="com.patrick0422.mealgo.ui.meal.MealFragment"
         android:label="급식"
         tools:layout="@layout/fragment_meal" >
         <action
