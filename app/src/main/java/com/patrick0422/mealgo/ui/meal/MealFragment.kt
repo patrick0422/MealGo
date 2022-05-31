@@ -17,6 +17,7 @@ class MealFragment : BaseFragment<FragmentMealBinding>(R.layout.fragment_meal) {
         binding.viewModel = mealViewModel
 
         isLoading(true)
+
         mealViewModel.getSchool()
 
         setObserver()
@@ -28,10 +29,7 @@ class MealFragment : BaseFragment<FragmentMealBinding>(R.layout.fragment_meal) {
                 makeToast("학교 정보를 먼저 설정해주세요")
                 findNavController().navigate(R.id.action_mealFragment_to_profileFragment)
             }
-            else {
-                if(mealViewModel.mealList.value == null)
-                    mealViewModel.getMeal()
-            }
+            mealViewModel.getMeal()
         }
         mealViewModel.mealDate.observe(viewLifecycleOwner) {
             binding.textDate.text = mealViewModel.mealDateFormatted
