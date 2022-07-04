@@ -26,22 +26,10 @@ class SchoolViewModel @Inject constructor(
     private val _schoolList = MutableLiveData<NetworkResult<List<School>>>()
     val schoolList: LiveData<NetworkResult<List<School>>> get() = _schoolList
 
-    val searchQuery = MutableStateFlow("")
 
-    @OptIn(ExperimentalCoroutinesApi::class)
-    val result = searchQuery
-        .debounce(500)
-        .distinctUntilChanged() // 중복 제거
-        .flatMapLatest { keyword ->
-            flow {
-                getSchoolList(keyword)
-                emit(keyword)
-            }
-        }
-        .flowOn(Dispatchers.Default)
-        .catch { e: Throwable -> e.stackTraceToString() }
 
-    private fun getSchoolList(keyword: String) = viewModelScope.launch {
+
+    fun getSchoolList(keyword: String) = viewModelScope.launch {
         _schoolList.value = NetworkResult.Loading()
 
         val queries = HashMap<String, String>()

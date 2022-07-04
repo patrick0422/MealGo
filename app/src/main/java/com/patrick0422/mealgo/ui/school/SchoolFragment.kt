@@ -15,6 +15,10 @@ import com.patrick0422.mealgo.ui.MainActivity
 import com.patrick0422.mealgo.util.Constants.Companion.TAG
 import com.patrick0422.mealgo.util.NetworkResult
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -22,11 +26,24 @@ class SchoolFragment : BaseFragment<FragmentSchoolBinding>(R.layout.fragment_sch
     private val schoolViewModel: SchoolViewModel by viewModels()
     private val schoolListAdapter by lazy { SchoolListAdapter() }
 
+    @OptIn(FlowPreview::class)
     override fun init() {
         binding.schoolListView.adapter = schoolListAdapter
 
+        val searchQuery = MutableStateFlow("")
+
         binding.editSchool.doAfterTextChanged { text ->
-            schoolViewModel.searchQuery.value = text.toString()
+            searchQuery.value = text.toString()
+        }
+
+        lifecycleScope.launch {
+            searchQuery
+                .debounce(500)
+                .distinctUntilChanged() // 중복 제거
+                .collect { keyword ->
+                    Log.d(TAG, "init: $keyword")
+                    schoolViewModel.getSchoolList(keyword)
+                }
         }
 
         schoolViewModel.schoolList.observe(viewLifecycleOwner) { response ->
@@ -43,14 +60,13 @@ class SchoolFragment : BaseFragment<FragmentSchoolBinding>(R.layout.fragment_sch
                 }
             }
         }
-        lifecycleScope.launch {
-            schoolViewModel.result.collect {
-                Log.d(TAG, "init: $it")
-            }
-        }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         (activity as MainActivity?)?.apply {
             supportActionBar?.show()
             binding.bottomNav.visibility = View.GONE
